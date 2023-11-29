@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 
 object ApiInstance {
-    private const val BASE_URL = "http://192.168.100.18/alphaware/"
+    private const val BASE_URL = "http://localhost/alphaware/"
 
     val api: Retrofit by lazy {
         createRetrofitInstance()
