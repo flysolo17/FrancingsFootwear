@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/accent1"
-    tools:context=".views.SignupActivity">
+    tools:context=".views.auth.SignupActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:background="@drawable/bg"
@@ -53,6 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:errorEnabled="true"
+            android:id="@+id/layoutFullname"
             app:boxBackgroundColor="@color/white"
             app:boxCornerRadiusBottomEnd="20dp"
             app:boxCornerRadiusTopStart="20dp"
@@ -63,7 +64,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Fullname"
+                android:hint="@string/fullname"
+                android:id="@+id/inputFullname"
                 android:inputType="textPersonName"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -77,11 +79,13 @@
             app:boxCornerRadiusTopEnd="20dp"
             app:boxCornerRadiusBottomStart="20dp"
             app:boxStrokeWidth="0dp"
+            android:id="@+id/layoutEmail"
             style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
+                android:id="@+id/inputEmail"
                 android:inputType="textEmailAddress"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,11 +99,13 @@
             app:boxCornerRadiusTopEnd="20dp"
             app:boxCornerRadiusBottomStart="20dp"
             app:boxStrokeWidth="0dp"
+            android:id="@+id/layoutPassword"
             style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
+                android:id="@+id/inputPassword"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,7 +116,7 @@
             app:errorEnabled="true"
             app:boxBackgroundColor="@color/white"
             app:boxCornerRadiusBottomEnd="20dp"
-
+            android:id="@+id/layoutRepeatPassword"
             app:boxCornerRadiusTopStart="20dp"
             app:boxCornerRadiusTopEnd="20dp"
             app:boxCornerRadiusBottomStart="20dp"
@@ -119,20 +125,33 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Repeat Password"
+                android:hint="@string/repeat_password"
+                android:id="@+id/inputRepeatPassword"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-
-        <com.google.android.material.button.MaterialButton
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/black"
-            android:fontFamily="@font/poppins_semibold"
-            android:paddingVertical="15dp"
-            android:text="Create Account"
-            android:id="@+id/buttonCreateAccount"
-            android:textColor="@color/white" />
+            android:layout_height="wrap_content">
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_marginStart="15dp"
+                android:progress="25"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                />
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/black"
+                android:fontFamily="@font/poppins_semibold"
+                android:paddingVertical="15dp"
+                android:text="Create Account"
+
+                android:id="@+id/buttonCreateAccount"
+                android:textColor="@color/white"/>
+        </FrameLayout>
+
     </LinearLayout>
 
 

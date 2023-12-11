@@ -1,14 +1,15 @@
 package com.ketchupzz.francingsfootwear.config
 
+
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.ketchupzz.francingsfootwear.repository.AuthRepository
 import com.ketchupzz.francingsfootwear.repository.AuthRepositoryImpl
-import com.ketchupzz.francingsfootwear.services.AuthService
 import dagger.Module
 import dagger.Provides
+
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 
@@ -18,13 +19,7 @@ object AppModules {
 
     @Singleton
     @Provides
-    fun provideAuthService(): AuthService {
-        return ApiInstance.api.create(AuthService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideAuthRepository(authService: AuthService): AuthRepository {
-        return AuthRepositoryImpl(authService)
+    fun providesAuthRepository() : AuthRepository {
+        return AuthRepositoryImpl(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance())
     }
 }

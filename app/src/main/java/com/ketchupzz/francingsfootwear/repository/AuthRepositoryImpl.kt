@@ -1,45 +1,66 @@
 package com.ketchupzz.francingsfootwear.repository
 
-import android.net.http.HttpException
-import android.util.Log
-import com.ketchupzz.francingsfootwear.models.Customer
-import com.ketchupzz.francingsfootwear.services.AuthService
-import com.ketchupzz.francingsfootwear.utils.UiState
-import retrofit2.Call
-import retrofit2.Response
-import javax.security.auth.callback.Callback
 
-class AuthRepositoryImpl(private val authService: AuthService) : AuthRepository {
-    override fun login(username: String, passwod: String, result: (UiState<Any>) -> Unit) {
-        TODO("Not yet implemented")
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import com.ketchupzz.francingsfootwear.models.Customer
+
+import com.ketchupzz.francingsfootwear.utils.UiState
+
+const val USER_COLLECTION = "users";
+class AuthRepositoryImpl(private  val firestore : FirebaseFirestore,private  val auth : FirebaseAuth) : AuthRepository {
+    override fun login(email: String, passwod: String, result: (UiState<FirebaseUser>) -> Unit) {
+        result.invoke(UiState.LOADING)
+        auth.signInWithEmailAndPassword(email,passwod)
+            .addOnCompleteListener {
+            if (it.isSuccessful) {
+                val user = it.result.user
+                if (user != null) {
+                    result.invoke(UiState.SUCCESS(user))
+                } else {
+                    result.invoke(UiState.FAILED("User not Found!"))
+                }
+
+            } else {
+                result.invoke(UiState.FAILED("Failed to logged in.."))
+            }
+        }.addOnFailureListener {
+                result.invoke(UiState.FAILED(it.message.toString()))
+        }
     }
 
-    override fun signup(customer: Customer, result: (UiState<Any>) -> Unit) {
+    override fun signup(email : String , passwod: String,name : String, result: (UiState<FirebaseUser>) -> Unit) {
         result.invoke(UiState.LOADING)
-       authService.signUp(  customer.firstname,
-           customer.mi,
-           customer.lastname,
-           customer.address,
-           customer.country,
-           customer.zipcode,
-           customer.mobile,
-           customer.telephone,
-           customer.email,
-           customer.password).enqueue(object  : Callback, retrofit2.Callback<Any> {
-           override fun onResponse(call: Call<Any>, response: Response<Any>) {
-               if (response.isSuccessful) {
-                   result.invoke(UiState.SUCCESS("Sign up success!"))
-               } else {
-                   Log.d("AUTH_REPO",response.errorBody().toString())
-                   result.invoke(UiState.FAILED("Unknown error"))
-               }
-           }
+        auth.createUserWithEmailAndPassword(email,passwod).addOnCompleteListener {
+            if (it.isSuccessful) {
+                val user = it.result.user
+                if (user != null) {
+                    val  customer = Customer(
+                        id = user.uid,
+                        name = name,
+                        profile =   "",
+                        email = email,
+                        addresses =  emptyList()
+                    )
+                    firestore.collection(USER_COLLECTION).document(user.uid).set(customer).addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            result.invoke(UiState.SUCCESS(user))
+                        } else {
+                            result.invoke(UiState.FAILED("Error Saving account"))
+                        }
+                    }.addOnFailureListener {
+                        result.invoke(UiState.FAILED(it.message.toString()))
+                    }
 
-           override fun onFailure(call: Call<Any>, t: Throwable) {
-               Log.d("AUTH_REPO",t.toString())
-               result.invoke(UiState.FAILED(t.printStackTrace().toString()))
-           }
-
-       })
+                } else {
+                    result.invoke(UiState.FAILED("Error Creating user.."))
+                }
+            } else {
+                result.invoke(UiState.FAILED("Error Creating user.."))
+            }
+        }.addOnFailureListener {
+            result.invoke(UiState.FAILED(it.message.toString()))
+        }
     }
 }
