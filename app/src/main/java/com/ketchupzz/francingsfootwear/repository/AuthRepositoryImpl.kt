@@ -63,4 +63,18 @@ class AuthRepositoryImpl(private  val firestore : FirebaseFirestore,private  val
             result.invoke(UiState.FAILED(it.message.toString()))
         }
     }
+
+    override fun forgotPassword(email: String, result: (UiState<String>) -> Unit) {
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    result.invoke(UiState.SUCCESS("We sent password reset link to : ${email}"))
+
+                } else {
+                    result.invoke(UiState.FAILED("Failed to logged in.."))
+                }
+            }.addOnFailureListener {
+                result.invoke(UiState.FAILED(it.message.toString()))
+            }
+    }
 }

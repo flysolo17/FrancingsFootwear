@@ -40,6 +40,12 @@ class LoginActivity : AppCompatActivity() {
         binding.buttonSignup.setOnClickListener {
             startActivity(Intent(this, SignupActivity::class.java))
         }
+        binding.buttonForgotPassword.setOnClickListener {
+            val fragment = ForgotPasswordFragment()
+            if (!fragment.isAdded) {
+                fragment.show(supportFragmentManager,"Forgot password")
+            }
+        }
     }
 
     private fun login(email :String,password  : String) {

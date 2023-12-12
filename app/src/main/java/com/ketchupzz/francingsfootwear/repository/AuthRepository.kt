@@ -8,4 +8,6 @@ interface AuthRepository {
     fun login(username : String , passwod : String,result : (UiState<FirebaseUser>) -> Unit)
 
     fun  signup(email : String , passwod: String,name : String,result: (UiState<FirebaseUser>) -> Unit)
+
+    fun  forgotPassword(email : String ,result: (UiState<String>) -> Unit)
 }

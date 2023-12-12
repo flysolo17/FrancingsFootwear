@@ -61,24 +61,28 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:errorEnabled="true"
-            android:id="@+id/layoutPassword"
             app:boxBackgroundColor="@color/accent1"
             app:boxCornerRadiusBottomEnd="20dp"
             app:boxCornerRadiusTopStart="20dp"
             app:boxCornerRadiusTopEnd="20dp"
             app:boxCornerRadiusBottomStart="20dp"
             app:boxStrokeWidth="0dp"
-            style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense">
+            style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+            app:endIconMode="password_toggle">
+
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
-                android:id="@+id/inputPassword"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword" />
+
         </com.google.android.material.textfield.TextInputLayout>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

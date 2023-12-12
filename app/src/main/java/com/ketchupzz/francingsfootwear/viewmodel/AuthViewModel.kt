@@ -17,4 +17,7 @@ class AuthViewModel @Inject constructor(private  val authRepository: AuthReposit
     fun login(email: String,pasword: String,result: (UiState<FirebaseUser>) -> Unit) {
         return authRepository.login(email,pasword,result)
     }
+    fun forgotPassword(email: String,result: (UiState<String>) -> Unit) {
+        return authRepository.forgotPassword(email,result)
+    }
 }
