@@ -1,0 +1,23 @@
+<!-- res/layout/custom_cart_action_view.xml -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <!-- Your custom view for the cart icon, for example, an ImageView -->
+    <ImageView
+        android:id="@+id/cart_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_shopping_bag_24"
+        android:layout_gravity="center"/>
+
+    <!-- Badge TextView -->
+    <TextView
+        android:id="@+id/badge_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:text="0"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/badge_background" />
+</FrameLayout>

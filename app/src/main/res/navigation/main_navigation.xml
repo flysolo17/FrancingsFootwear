@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/navigation_shop">
+    <fragment
+        android:id="@+id/navigation_shop"
+        android:name="com.ketchupzz.francingsfootwear.views.nav.shop.ShopFragment"
+        android:label="Shop"
+        tools:layout="@layout/fragment_shop" >
+        <action
+            android:id="@+id/action_navigation_shop_to_viewProductFragment"
+            app:destination="@id/viewProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_orders"
+        android:name="com.ketchupzz.francingsfootwear.views.nav.orders.OrdersFragment"
+        android:label="My Orders"
+        tools:layout="@layout/fragment_orders" >
+        <action
+            android:id="@+id/action_navigation_orders_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_account"
+        android:name="com.ketchupzz.francingsfootwear.views.nav.account.AccountFragment"
+        android:label="Account"
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_navigation_account_to_updateAccount"
+            app:destination="@id/updateAccount" />
+        <action
+            android:id="@+id/action_navigation_account_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_navigation_account_to_addressesFragment"
+            app:destination="@id/addressesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateAccount"
+        android:name="com.ketchupzz.francingsfootwear.views.nav.account.UpdateAccount"
+        android:label="Update Account"
+        tools:layout="@layout/fragment_update_account" >
+        <argument
+            android:name="customer"
+            app:argType="com.ketchupzz.francingsfootwear.models.customer.Customer" />
+    </fragment>
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.ketchupzz.francingsfootwear.views.nav.account.ChangePasswordFragment"
+        android:label="Change Password"
+        tools:layout="@layout/fragment_change_password" >
+        <argument
+            android:name="customer"
+            app:argType="com.ketchupzz.francingsfootwear.models.customer.Customer" />
+    </fragment>
+    <fragment
+        android:id="@+id/addressesFragment"
+        android:name="com.ketchupzz.francingsfootwear.views.nav.account.AddressesFragment"
+        android:label="My Address"
+        tools:layout="@layout/fragment_addresses" >
+
+        <argument
+            android:name="customer"
+            app:argType="com.ketchupzz.francingsfootwear.models.customer.Customer" />
+        <action
+            android:id="@+id/action_addressesFragment_to_createAddressFragment"
+            app:destination="@id/createAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAddressFragment"
+        android:name="com.ketchupzz.francingsfootwear.views.nav.account.CreateAddressFragment"
+        android:label="Create Address"
+        tools:layout="@layout/fragment_create_address" >
+        <argument
+            android:name="customer"
+            app:argType="com.ketchupzz.francingsfootwear.models.customer.Customer" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewProductFragment"
+        android:name="com.ketchupzz.francingsfootwear.views.nav.shop.ViewProductFragment"
+        android:label=""
+        tools:layout="@layout/fragment_view_product" >
+        <argument
+            android:name="product"
+            app:argType="com.ketchupzz.francingsfootwear.models.products.Product" />
+        <argument
+            android:name="variations"
+            app:argType="com.ketchupzz.francingsfootwear.models.products.Variation[]" />
+        <action
+            android:id="@+id/action_viewProductFragment_to_selectedProductBottomSheet"
+            app:destination="@id/selectedProductBottomSheet" />
+
+    </fragment>
+    <dialog
+        android:id="@+id/selectedProductBottomSheet"
+        android:name="com.ketchupzz.francingsfootwear.views.nav.shop.widgets.SelectedProductBottomSheet"
+        android:label="fragment_selected_product_bottom_sheet"
+        tools:layout="@layout/fragment_selected_product_bottom_sheet" >
+        <argument
+            android:name="product"
+            app:argType="com.ketchupzz.francingsfootwear.models.products.Product" />
+        <argument
+            android:name="variation"
+            app:argType="com.ketchupzz.francingsfootwear.models.products.Variation" />
+        <argument
+            android:name="size"
+            app:argType="com.ketchupzz.francingsfootwear.models.products.Size" />
+        <argument
+            android:name="isCheckOut"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_selectedProductBottomSheet_to_checkoutFragment"
+            app:destination="@id/checkoutFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/menu_cart"
+        android:name="com.ketchupzz.francingsfootwear.views.nav.shop.cart.CartFragment"
+        android:label="My Cart"
+        tools:layout="@layout/fragment_cart" >
+        <action
+            android:id="@+id/action_menu_cart_to_checkoutFragment"
+            app:destination="@id/checkoutFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="com.ketchupzz.francingsfootwear.views.nav.CheckoutFragment"
+        android:label="Order Summary"
+        tools:layout="@layout/fragment_checkout" >
+        <argument
+            android:name="items"
+            app:argType="com.ketchupzz.francingsfootwear.models.transaction.Items[]" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_addressesFragment"
+            app:destination="@id/addressesFragment" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.ketchupzz.francingsfootwear.views.nav.shop.widgets.PaymentFragment"
+        android:label="GCASH Payment"
+        tools:layout="@layout/fragment_payment" >
+        <argument
+            android:name="transaction"
+            app:argType="com.ketchupzz.francingsfootwear.models.transaction.Transactions" />
+    </fragment>
+    <fragment
+        android:id="@+id/menu_messages"
+        android:name="com.ketchupzz.francingsfootwear.views.nav.messages.MessagesFragment"
+        android:label="Message"
+        tools:layout="@layout/fragment_messages" />
+</navigation>

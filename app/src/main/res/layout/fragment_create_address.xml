@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/accent1"
+    android:padding="10dp"
+    android:orientation="vertical"
+    tools:context=".views.nav.account.CreateAddressFragment">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:errorEnabled="true"
+        android:layout_marginTop="5dp"
+        android:id="@+id/layoutAddress"
+        app:boxBackgroundColor="@color/white"
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxCornerRadiusTopStart="20dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxCornerRadiusBottomStart="20dp"
+        app:boxStrokeWidth="0dp"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/complete_address"
+            android:id="@+id/inputAddress"
+            android:textAlignment="textStart"
+            android:lines="3"
+            android:inputType="textMultiLine"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkboxDefault"
+        android:text="Make as Default Address"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/contact"
+        android:layout_marginVertical="5dp"
+        android:fontFamily="@font/poppins_medium"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:errorEnabled="true"
+        android:id="@+id/layoutFullname"
+        app:boxBackgroundColor="@color/white"
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxCornerRadiusTopStart="20dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxCornerRadiusBottomStart="20dp"
+        app:boxStrokeWidth="0dp"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/fullname"
+            android:id="@+id/inputFullname"
+            android:inputType="textPersonName"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:counterEnabled="true"
+        android:id="@+id/inputPhoneLayout"
+        app:counterMaxLength="10"
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxCornerRadiusTopStart="20dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxCornerRadiusBottomStart="20dp"
+        app:boxStrokeWidth="0dp"
+        app:prefixText="+63"
+        app:errorEnabled="true"
+        app:boxBackgroundColor="@color/white"
+        app:endIconMode="clear_text"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+        app:helperText="Ex. 9123434657">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/inputPhone"
+            android:inputType="phone"
+            android:hint="@string/phone_number"
+            android:maxLength="10"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:fontFamily="@font/poppins_semibold"
+        android:paddingVertical="15dp"
+        android:text="@string/save_address"
+        android:id="@+id/buttonSaveAddress"
+        android:textColor="@color/white"/>
+
+</LinearLayout>

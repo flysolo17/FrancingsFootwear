@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@color/accent1"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".views.nav.account.AddressesFragment">
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="10dp"
+        app:cornerRadius="5dp"
+        android:id="@+id/buttonCreateAddress"
+        android:text="Create Address"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/list_addresses"
+        android:id="@+id/recyclerviewAddresses"/>
+</LinearLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/white"
+    android:elevation="4dp"
+    app:cardCornerRadius="5dp"
+    android:layout_marginVertical="5dp"
+    style="@style/Widget.Material3.CardView.Filled">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:id="@+id/textFullname"
+            android:text="@string/juan_dela_cruz"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="1dp"
+            android:layout_marginEnd="10dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/textPhone"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:text="09885656425"
+            android:textColor="#C1BFBF" />
+
+    </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:id="@+id/textAddress"
+            android:text="@string/sample"
+            android:textColor="#C1BFBF" />
+
+        <TextView
+            android:id="@+id/textDefaultAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/text_border"
+            android:fontFamily="@font/poppins_medium"
+            android:padding="5dp"
+            android:visibility="gone"
+            android:text="Default"
+            android:textColor="#EF5350"
+            android:textSize="10sp" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

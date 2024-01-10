@@ -24,6 +24,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
         binding.buttonLogin.setOnClickListener {
             val  email = binding.inputEmail.text.toString()
             val password = binding.inputPassword.text.toString()
@@ -75,6 +76,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun updateUI(user : FirebaseUser) {
+        authViewModel.setCurrentUser(user)
         startActivity(Intent(this,MainActivity::class.java))
     }
 
