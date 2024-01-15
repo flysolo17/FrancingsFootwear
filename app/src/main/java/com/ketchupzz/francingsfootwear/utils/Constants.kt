@@ -4,8 +4,12 @@ import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
 import android.webkit.MimeTypeMap
+import com.ketchupzz.francingsfootwear.models.messages.Messages
 import com.ketchupzz.francingsfootwear.models.products.Variation
 import com.ketchupzz.francingsfootwear.models.transaction.Items
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlin.random.Random
 
 fun Context.getImageTypeFromUri(imageUri: Uri?): String? {
@@ -77,3 +81,28 @@ fun calculateShippingFee(numberOfItems: Int): Double {
     }
 }
 
+fun Date.timeAgoOrDateTimeFormat(): String {
+    val now = Date()
+    val timeDifference = now.time - this.time
+    val minutesInMillis = 60 * 1000
+    val hoursInMillis = 60 * minutesInMillis
+    val daysInMillis = 24 * hoursInMillis
+
+    return when {
+        timeDifference < minutesInMillis -> "just now"
+        timeDifference < hoursInMillis -> "${timeDifference / minutesInMillis} minute${if (timeDifference / minutesInMillis > 1) "s" else ""} ago"
+        timeDifference < daysInMillis -> "${timeDifference / hoursInMillis} hour${if (timeDifference / hoursInMillis > 1) "s" else ""} ago"
+        else -> SimpleDateFormat("MMM/dd/yyyy HH:mm", Locale.getDefault()).format(this)
+    }
+}
+
+fun List<Messages>.getLastMessage(myID : String) : Int {
+    var count = 0
+    for (message in this) {
+        if (message.senderID == myID) {
+            break
+        }
+        count += 1
+    }
+    return count
+}

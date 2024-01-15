@@ -1,6 +1,10 @@
 package com.ketchupzz.francingsfootwear.views.nav.shop
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -45,7 +49,6 @@ class ShopFragment : Fragment() ,ProductAdapterClickListener {
         super.onViewCreated(view, savedInstanceState)
         observers()
         binding.recycler.apply {
-
             adapter = ImageAdapter(view.context, listOf(R.drawable.banner1,R.drawable.banner2,R.drawable.banner3))
         }
 
@@ -68,9 +71,48 @@ class ShopFragment : Fragment() ,ProductAdapterClickListener {
                         layoutManager = GridLayoutManager(binding.root.context,2)
                         adapter = productsAdapter
                     }
+                    implementSearch(productsAdapter)
                 }
             }
         }
+    }
+
+    private fun implementSearch(adapter: ProductAdapter) {
+        val handler = Handler(Looper.getMainLooper())
+        var searchHandler: Runnable? = null
+        binding.inputProductSearch.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // If the inputProductSearch has focus, hide the featured products
+                binding.layoutFeaturedProducts.visibility = View.GONE
+            } else {
+                // If the inputProductSearch loses focus, show the featured products
+                binding.layoutFeaturedProducts.visibility = View.VISIBLE
+            }
+        }
+        binding.inputProductSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, start: Int, count: Int, after: Int) {
+                searchHandler?.let { handler.removeCallbacks(it) }
+            }
+
+            override fun onTextChanged(charSequence: CharSequence, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(editable: Editable) {
+
+                val query = editable.toString().trim()
+
+                searchHandler?.let { handler.removeCallbacks(it) }
+
+                searchHandler = Runnable {
+                    adapter.filter(query)
+
+                }
+
+
+                handler.postDelayed(searchHandler!!, 500)
+            }
+        })
     }
 
 

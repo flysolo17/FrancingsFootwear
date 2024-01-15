@@ -25,22 +25,26 @@ import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
+import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.ketchupzz.francingsfootwear.databinding.ActivityMainBinding
+import com.ketchupzz.francingsfootwear.models.customer.Customer
 
 
 import com.ketchupzz.francingsfootwear.utils.LoadingDialog
 import com.ketchupzz.francingsfootwear.utils.UiState
+import com.ketchupzz.francingsfootwear.utils.getLastMessage
 
 import com.ketchupzz.francingsfootwear.viewmodel.AuthViewModel
 import com.ketchupzz.francingsfootwear.viewmodel.CartViewModel
+import com.ketchupzz.francingsfootwear.viewmodel.MessagesViewModel
 import com.ketchupzz.francingsfootwear.viewmodel.ProductViewModel
 import com.ketchupzz.francingsfootwear.viewmodel.TransactionViewModel
 
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
+@ExperimentalBadgeUtils @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val authViewModel : AuthViewModel by viewModels()
     private val productViewModel by viewModels<ProductViewModel>()
@@ -50,6 +54,8 @@ class MainActivity : AppCompatActivity() {
     private val loadingDialog = LoadingDialog(this)
     private lateinit var navController : NavController
     private lateinit var badge: BadgeDrawable
+    private lateinit var messageBadge: BadgeDrawable
+    private val messagesViewModel by viewModels<MessagesViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -59,6 +65,7 @@ class MainActivity : AppCompatActivity() {
             authViewModel.getCustomerInfo(it.uid)
         }
         badge = BadgeDrawable.create(this)
+        messageBadge = BadgeDrawable.create(this)
         observers()
     }
     private fun setUpNav() {
@@ -119,6 +126,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observers() {
+        var customer : Customer ? = null
         authViewModel.customer.observe(this) {
             when(it) {
                 is UiState.FAILED -> {
@@ -134,8 +142,9 @@ class MainActivity : AppCompatActivity() {
                 is UiState.SUCCESS -> {
                     loadingDialog.closeDialog()
                     setUpNav()
+                    customer = it.data
                     cartViewModel.getAllMyCart(it.data.id?: "")
-
+                    messagesViewModel.getAllMessages(it.data.id ?: "")
                     productViewModel.getAllProducts()
                     transactionViewModel.getAllMyTransactions(it.data.id ?:"")
 
@@ -155,17 +164,36 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        messagesViewModel.messages.observe(this) {
+            when(it) {
+                is UiState.FAILED -> {
+                }
+                is UiState.LOADING -> {
+                }
+                is UiState.SUCCESS -> {
+                    if (customer != null) {
+                        messageBadge.number = it.data.getLastMessage(customer?.id ?: "")
+                        invalidateOptionsMenu()
+                    }
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val currentDestinationId = navController.currentDestination?.id
-        if (currentDestinationId != R.id.menu_cart || currentDestinationId != R.id.checkoutFragment) {
+        if (currentDestinationId != R.id.menu_cart && currentDestinationId != R.id.checkoutFragment && currentDestinationId != R.id.menu_messages) {
             menuInflater.inflate(R.menu.action_menu, menu)
             val cart = menu.findItem(R.id.menu_cart)
+            val messages = menu.findItem(R.id.menu_messages)
             BadgeUtils.attachBadgeDrawable(badge, binding.toolbar, cart.itemId)
+            BadgeUtils.attachBadgeDrawable(messageBadge, binding.toolbar, messages.itemId)
+            invalidateOptionsMenu()
             return true
         }
+        invalidateOptionsMenu()
         return true
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

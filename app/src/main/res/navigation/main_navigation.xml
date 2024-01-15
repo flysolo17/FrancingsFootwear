@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_navigation_orders_to_paymentFragment"
             app:destination="@id/paymentFragment" />
+        <action
+            android:id="@+id/action_navigation_orders_to_reviewTransaction"
+            app:destination="@id/reviewTransaction" />
     </fragment>
     <fragment
         android:id="@+id/navigation_account"
@@ -152,4 +155,13 @@
         android:name="com.ketchupzz.francingsfootwear.views.nav.messages.MessagesFragment"
         android:label="Message"
         tools:layout="@layout/fragment_messages" />
+    <fragment
+        android:id="@+id/reviewTransaction"
+        android:name="com.ketchupzz.francingsfootwear.views.nav.orders.ReviewTransaction"
+        android:label="Review Transaction"
+        tools:layout="@layout/fragment_review_transaction" >
+        <argument
+            android:name="transaction"
+            app:argType="com.ketchupzz.francingsfootwear.models.transaction.Transactions" />
+    </fragment>
 </navigation>

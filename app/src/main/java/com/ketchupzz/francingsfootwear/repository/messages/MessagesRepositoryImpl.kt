@@ -1,5 +1,6 @@
 package com.ketchupzz.francingsfootwear.repository.messages
 
+import android.util.Log
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -32,6 +33,7 @@ class MessagesRepositoryImpl(private val firestore: FirebaseFirestore): Messages
             .addSnapshotListener { value, error ->
                 error?.let {
                     result.invoke(UiState.FAILED(it.message.toString()))
+                    Log.d("messages",it.message.toString())
                 }
                 value?.let {
                     result.invoke(UiState.SUCCESS(it.toObjects(Messages::class.java)))

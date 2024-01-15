@@ -52,9 +52,15 @@ class OrdersByStatusFragment : Fragment() ,TransactionClickListener{
                 }
                 is UiState.SUCCESS -> {
                     loadingDialog.closeDialog()
+                    val transactions = it.data.filter { it.status == TransactionStatus.entries[position ?: 0] }
+                    binding.layoutNoOrder.visibility = if (transactions.isEmpty()) {
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
                     binding.recyclerviewTransactions.apply {
                         layoutManager = LinearLayoutManager(view.context)
-                        adapter = TransactionAdapter(view.context,it.data.filter { it.status == TransactionStatus.entries[position ?: 0] },this@OrdersByStatusFragment)
+                        adapter = TransactionAdapter(view.context,transactions,this@OrdersByStatusFragment)
                     }
                 }
             }
@@ -76,7 +82,8 @@ class OrdersByStatusFragment : Fragment() ,TransactionClickListener{
     }
 
     override fun viewTransaction(transactions: Transactions) {
-        TODO("Not yet implemented")
+        val directions = OrdersFragmentDirections.actionNavigationOrdersToReviewTransaction(transactions)
+        findNavController().navigate(directions)
     }
 
     override fun payWithGCash(transactions: Transactions) {

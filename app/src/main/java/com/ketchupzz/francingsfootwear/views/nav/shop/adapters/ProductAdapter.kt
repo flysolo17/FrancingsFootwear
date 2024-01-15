@@ -25,8 +25,10 @@ import com.ketchupzz.francingsfootwear.viewmodel.ProductViewModel
 interface ProductAdapterClickListener {
     fun onClick(product: Product,variations : List<Variation>)
 }
-class ProductAdapter(private val context: Context, private val products : List<Product>, private  val productAdapterClickListener: ProductAdapterClickListener) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(private val context: Context, private var products : List<Product>, private  val productAdapterClickListener: ProductAdapterClickListener) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
+
+    private val originalList: List<Product> = products
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.adapter_product,parent,false)
         return ProductViewHolder(view)
@@ -49,6 +51,17 @@ class ProductAdapter(private val context: Context, private val products : List<P
             productAdapterClickListener.onClick(product,holder.variations)
         }
        holder.getProductPrice(firestore,product.id ?: "")
+    }
+
+    fun filter(query: String) {
+        products = if (query.isBlank()) {
+            // If the query is empty, reset to the original list
+            originalList
+        } else {
+            // Filter the list based on the search query
+            originalList.filter { it.name!!.contains(query, ignoreCase = true) }
+        }
+        notifyDataSetChanged()
     }
     class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textProductName : TextView = itemView.findViewById(R.id.textProductName)

@@ -46,6 +46,9 @@ class TransactionAdapter(private val context: Context,private val transactions :
             layoutManager = LinearLayoutManager(context)
             adapter = ItemsAdapter(context,transaction.items)
         }
+        holder.itemView.setOnClickListener {
+            transactionClickListener.viewTransaction(transaction)
+        }
 
         if (transaction.status == TransactionStatus.PENDING) {
             holder.buttonCancel.visibility = View.VISIBLE
