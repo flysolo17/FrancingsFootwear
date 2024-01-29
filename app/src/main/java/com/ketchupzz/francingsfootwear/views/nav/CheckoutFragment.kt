@@ -145,7 +145,7 @@ class CheckoutFragment : Fragment() {
     }
     private fun displayCurrentAddress(address: Addresses?) {
         address?.let {
-            binding.textFullname.text = it.contacts?.phone ?: "--no-name--"
+            binding.textFullname.text = it.contacts?.name ?: "--no-name--"
             binding.textPhone.text = it.contacts?.phone ?: "--no-phone--"
             binding.textAddress.text= it.name ?: "no default address yet"
             return

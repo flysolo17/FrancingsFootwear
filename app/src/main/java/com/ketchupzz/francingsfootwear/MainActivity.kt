@@ -60,6 +60,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        navController = findNavController(R.id.nav_host_fragment_container)
         setSupportActionBar(binding.toolbar)
         FirebaseAuth.getInstance().currentUser?.let{
             authViewModel.getCustomerInfo(it.uid)
@@ -70,13 +72,11 @@ class MainActivity : AppCompatActivity() {
     }
     private fun setUpNav() {
         val navView: BottomNavigationView = binding.navView
-        navController = findNavController(R.id.nav_host_fragment_container)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_shop,
                 R.id.navigation_orders,
                 R.id.navigation_account,
-
             )
         )
 
@@ -193,7 +193,6 @@ class MainActivity : AppCompatActivity() {
         }
         invalidateOptionsMenu()
         return true
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -206,7 +205,7 @@ class MainActivity : AppCompatActivity() {
                 navController.navigate(R.id.menu_messages)
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> false
         }
     }
 }

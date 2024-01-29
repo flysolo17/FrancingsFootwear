@@ -86,6 +86,12 @@ class AccountFragment : Fragment() {
                 findNavController().navigate(directions)
             }
         }
+        binding.buttonPrivacy.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_account_to_privacyFragment)
+        }
+        binding.buttonTerms.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_account_to_termsFragment)
+        }
     }
 
     override fun onAttach(context: Context) {

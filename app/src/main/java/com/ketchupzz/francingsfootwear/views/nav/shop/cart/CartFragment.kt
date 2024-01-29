@@ -10,8 +10,11 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ketchupzz.francingsfootwear.R
 import com.ketchupzz.francingsfootwear.databinding.FragmentCartBinding
 import com.ketchupzz.francingsfootwear.models.cart.Cart
@@ -33,6 +36,7 @@ class CartFragment : Fragment(),CartClickListener {
     private lateinit var loadingDialog: LoadingDialog
     private val cartViewModel by activityViewModels<CartViewModel>()
     private val selectedCart : MutableList<Items> = mutableListOf()
+    private lateinit var cartAdapter: CartAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -75,11 +79,13 @@ class CartFragment : Fragment(),CartClickListener {
                         }?.quantity = cart.quantity
                     }
                     updateTotal(selectedCart)
+                    cartAdapter = CartAdapter(binding.root.context,it.data,this@CartFragment)
                     binding.recyclerViewCart.apply {
                         layoutManager = LinearLayoutManager(binding.root.context)
-                        adapter = CartAdapter(binding.root.context,it.data,this@CartFragment)
+                        adapter = cartAdapter
                         addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
                     }
+                    attachSwipeToDelete()
                 }
             }
         }
@@ -102,6 +108,47 @@ class CartFragment : Fragment(),CartClickListener {
         super.onResume()
         selectedCart.clear()
         updateTotal(selectedCart)
+    }
+
+    private fun attachSwipeToDelete() {
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0, ItemTouchHelper.LEFT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                // Do nothing, as we don't support dragging
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                deleteCart(position)
+            }
+        })
+        itemTouchHelper.attachToRecyclerView(binding.recyclerViewCart)
+    }
+
+
+    private fun deleteCart(position : Int) {
+        cartViewModel.cartRepository.removeToCart(cartAdapter.getCartByPosition(position).id) {
+            when(it) {
+                is UiState.FAILED -> {
+                    loadingDialog.closeDialog()
+                    Toast.makeText(binding.root.context,it.message,Toast.LENGTH_SHORT).show()
+                }
+                is UiState.LOADING -> {
+                    loadingDialog.showDialog("Deleting..")
+                }
+                is UiState.SUCCESS -> {
+                    loadingDialog.closeDialog()
+                    Toast.makeText(binding.root.context,it.data,Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        }
     }
 
 }

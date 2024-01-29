@@ -52,6 +52,10 @@ class CartAdapter(private val context: Context,private val carts : List<Cart>,pr
 
         }
     }
+
+    fun getCartByPosition(position: Int) : Cart{
+        return  carts[position]
+    }
     class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val textName : TextView = itemView.findViewById(R.id.textProductName)
         private val textVariation : TextView = itemView.findViewById(R.id.textProductVariation)

@@ -39,6 +39,12 @@
         <action
             android:id="@+id/action_navigation_account_to_addressesFragment"
             app:destination="@id/addressesFragment" />
+        <action
+            android:id="@+id/action_navigation_account_to_privacyFragment"
+            app:destination="@id/privacyFragment" />
+        <action
+            android:id="@+id/action_navigation_account_to_termsFragment"
+            app:destination="@id/termsFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateAccount"
@@ -164,4 +170,14 @@
             android:name="transaction"
             app:argType="com.ketchupzz.francingsfootwear.models.transaction.Transactions" />
     </fragment>
+    <fragment
+        android:id="@+id/privacyFragment"
+        android:name="com.ketchupzz.francingsfootwear.views.auth.PrivacyFragment"
+        android:label="Privacy Policy"
+        tools:layout="@layout/fragment_privacy" />
+    <fragment
+        android:id="@+id/termsFragment"
+        android:name="com.ketchupzz.francingsfootwear.views.auth.TermsFragment"
+        android:label="Terms And Conditions"
+        tools:layout="@layout/fragment_terms" />
 </navigation>
