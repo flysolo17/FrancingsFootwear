@@ -32,7 +32,7 @@ class AuthRepositoryImpl(private  val firestore : FirebaseFirestore,private  val
                 }
 
             } else {
-                result.invoke(UiState.FAILED("Failed to logged in.."))
+                result.invoke(UiState.FAILED("Wrong Password!"))
             }
         }.addOnFailureListener {
                 result.invoke(UiState.FAILED(it.message.toString()))
