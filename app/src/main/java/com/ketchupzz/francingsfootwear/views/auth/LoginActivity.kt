@@ -57,12 +57,14 @@ class LoginActivity : AppCompatActivity() {
                     binding.progress.visibility = View.GONE
                     binding.buttonLogin.isEnabled = true
                     binding.buttonLogin.text = "Login"
-                    Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT)
-                        .apply {
-                            setGravity(Gravity.CENTER, 0, 0)
-                            show()
-                        }
+                    val toast =  Toast.makeText(applicationContext, it.message, Toast.LENGTH_LONG)
+                        toast.setGravity(Gravity.CENTER,0,0)
+                    toast.show()
+                    if (it.message == "Wrong Password!") {
+                        binding.layoutPassword.error = "Wrong Password!"
+                    }
                 }
+
                 is UiState.LOADING -> {
                     binding.progress.visibility = View.VISIBLE
                     binding.buttonLogin.isEnabled = false

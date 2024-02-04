@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.ketchupzz.francingsfootwear.R
 import com.ketchupzz.francingsfootwear.databinding.ActivitySignupBinding
@@ -98,6 +99,7 @@ class SignupActivity : AppCompatActivity() {
                     binding.buttonCreateAccount.isEnabled = true
                     binding.buttonCreateAccount.text = "Creating Account"
                     Toast.makeText(binding.root.context,"Successfully Logged in",Toast.LENGTH_SHORT).show()
+                    finish()
                 }
             }
         }
