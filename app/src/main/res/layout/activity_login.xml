@@ -20,19 +20,6 @@
             android:src="@drawable/logo"
             />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_black"
-            android:textSize="24sp"
-            android:text="@string/francing_s" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:fontFamily="@font/poppins"
-            android:text="@string/footwear_app"/>
     </LinearLayout>
 
     <LinearLayout

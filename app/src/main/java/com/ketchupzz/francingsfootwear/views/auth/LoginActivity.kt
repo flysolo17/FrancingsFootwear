@@ -3,6 +3,7 @@ package com.ketchupzz.francingsfootwear.views.auth
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -56,7 +57,11 @@ class LoginActivity : AppCompatActivity() {
                     binding.progress.visibility = View.GONE
                     binding.buttonLogin.isEnabled = true
                     binding.buttonLogin.text = "Login"
-                    Toast.makeText(binding.root.context,it.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT)
+                        .apply {
+                            setGravity(Gravity.CENTER, 0, 0)
+                            show()
+                        }
                 }
                 is UiState.LOADING -> {
                     binding.progress.visibility = View.VISIBLE
@@ -67,7 +72,11 @@ class LoginActivity : AppCompatActivity() {
                     binding.progress.visibility = View.GONE
                     binding.buttonLogin.isEnabled = true
                     binding.buttonLogin.text = "Login"
-                    Toast.makeText(binding.root.context,"Successfully Logged in", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(binding.root.context, "Successfully Logged in", Toast.LENGTH_SHORT)
+                        .apply {
+                            setGravity(Gravity.CENTER, 0, 0)
+                            show()
+                        }
                     updateUI(it.data)
 
                 }
